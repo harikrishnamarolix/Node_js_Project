@@ -10,9 +10,6 @@ COPY package*.json ./
 # Install Node.js dependencies
 RUN npm install
 
-# Copy the rest of the application files to the container
-COPY . .
-
 # Expose a port (if your Node.js app listens on a specific port)
 EXPOSE 3000
 
