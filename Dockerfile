@@ -1,16 +1,7 @@
-FROM node:14
-
-# Create app directory
-WORKDIR /usr/src/app
-
-COPY package.json ./
-COPY yum.lock ./
-
-# Install node-modules
-RUN yum install --frozen-lockfile
-
-COPY dist/ ./
-
+FROM node:12-alpine3.14
+WORKDIR /app
+COPY package.json /app
+RUN npm ci --only=production && npm cache clean --force
+COPY . /app
+CMD node index.js
 EXPOSE 3000
-
-CMD ["node", "server.js"]
