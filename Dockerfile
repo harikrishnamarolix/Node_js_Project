@@ -1,6 +1,16 @@
-FROM node:4.6
-WORKDIR /app
-ADD . /app
-RUN npm install
+FROM node:14
+
+# Create app directory
+WORKDIR /usr/src/app
+
+COPY package.json ./
+COPY yum.lock ./
+
+# Install node-modules
+RUN yum install --frozen-lockfile
+
+COPY dist/ ./
+
 EXPOSE 3000
-CMD npm start
+
+CMD ["node", "server.js"]
