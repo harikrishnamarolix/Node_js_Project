@@ -1,17 +1,9 @@
-# Use Alpine Linux as the base image
-FROM node:14-alpine
-
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy package.json and package-lock.json to the container
+FROM node:10-alpine
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+WORKDIR /home/node/app
 COPY package*.json ./
-
-# Install Node.js dependencies
+USER node
 RUN npm install
-
-# Expose a port (if your Node.js app listens on a specific port)
-EXPOSE 3000
-
-# Start your Node.js application
-CMD ["node", "server.js"]
+COPY --chown=node:node . .
+EXPOSE 8080
+CMD ["node", "app.js"]
